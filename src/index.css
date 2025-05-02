@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+
+.customInput {
+  padding-top: 1.25rem;
+}
+
+.customInput .form-control {
+  height: 44px;
+  border: 1px solid #D0D5DD;
+  font-size: 14px;
+  border-radius: 0.5rem;
+  width: 100%;
+  padding: 16px;
+}
+
+.customInput .form-control:active,
+.customInput .form-control:focus,
+.customInput .form-control:focus-visible,
+.customInput .form-control:focus-within {
+  box-shadow: none !important;
+  outline: 0 !important;
+  border-color: #155eef !important;
+}
+
+.customInput .form-control.inputError {
+  border-color: red !important;
+  background-color: rgba(red, 0.01);
+}
+
+.customInput .form-control.inputError::placeholder {
+  color: red !important;
+}
+
+.eyeIcon {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  display: flex;
+}
+
+.errorText {
+  color: red;
+  font-size: 12px;
+  text-align: left !important;
+  margin-top: 3px;
+}
+
+.commonBtn {
+  background-color: #155eef;
+  border: 1px solid #155eef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  border-radius: 8px;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  padding-inline: 12px;
+  white-space: nowrap;
+  /* &.sm {
+    height: 36px;
+    font-size: 14px;
+  } */
+}

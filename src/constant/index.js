@@ -1,0 +1,4 @@
+export const BASE_URL = "https://apnicitybackend.onrender.com/"
+// export const BASE_URL = "http://192.168.0.6:8000/"
+// export const BASE_URL = "http://localhost:8000/"
+export const AUTH_TOKEN = "CHAT_APP"
