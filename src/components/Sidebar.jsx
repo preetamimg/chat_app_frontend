@@ -3,9 +3,11 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import useProfile from "../hooks/useProfile";
 import Avatar from "./Avatar";
-import { getAPIAuth } from "../service/apiInstance";
 import moment from "moment";
 import { socket } from "../service/socket";
+import FriendRequestOffcanvas from "./FriendRequestOffcanvas";
+import MessageOffcanvas from "./MessageOffcanvas";
+import SearchUserOffcanvas from "./SearchUserOffcanvas";
 
 const Sidebar = () => {
   const navigate = useNavigate()
@@ -23,33 +25,6 @@ const Sidebar = () => {
     }
   }, [pathname])
 
-  // const fetchFriendsList = async () => {
-  //   try {
-  //     const res = await getAPIAuth(`user/getUserFriends?search=${searchQuery}`)
-  //     if(res?.data?.success) {
-  //       console.log(".....", res)
-  //       setFriendList(res?.data?.data)
-  //     }
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
-  // useEffect(()=> {
-  //   let timer;
-  //   if(token && !searchQuery) {
-  //     fetchFriendsList()
-  //   }else{
-  //     timer = setTimeout(() => {
-  //       fetchFriendsList()
-  //     }, 300);
-  //   }
-
-  //   return () =>  clearTimeout(timer)
-
-        
-  // }, [token, searchQuery])
-
   useEffect(()=> {
     socket.on("user_friend_list", (requests) => {
       console.log("user_friend_list:", requests);
@@ -63,21 +38,34 @@ const Sidebar = () => {
     <>
       <div
         className={`sidebar w-full sm:w-[17.5rem] bg-white h-full overflow-hidden flex flex-col max-lg:h-dvh max-lg:fixed max-lg:z-20 transition-all duration-300 ease-in-out max-lg:top-0 max-lg:left-0 border-r border-[#EAECF0] ${
-          showSidebar ? "" : "max-lg:-translate-x-full"
+          pathname === "/" ? "" : "max-lg:-translate-x-full"
         }`}
       >
         <div className="sidebarHeader p-6">
-          <Link className="mb-6 flex" to={'/'}>
-            <img
-              width={144}
-              height={32}
-              loading="lazy"
-              quality={90}
-              alt="logo"
-              src={"./assets/img/logo.png"}
-              className="w-44 h-10 object-contain -ml-6"
-            />
-          </Link>
+          <div className="flex max-lg:mb-6 w-full">
+            <Link className="lg:mb-6 flex flex-1" to={'/'}>
+              <img
+                width={144}
+                height={32}
+                loading="lazy"
+                quality={90}
+                alt="logo"
+                src={"./assets/img/logo.png"}
+                className="w-44 h-10 object-contain flex -ml-6"
+              />
+            </Link>
+            <div className="flex lg:hidden gap-3">
+              <div className="a">
+                <SearchUserOffcanvas/>
+              </div>
+              <div className="a">
+                <FriendRequestOffcanvas/>
+              </div>
+              <div className="a">
+                <MessageOffcanvas/>
+              </div>
+            </div>
+          </div>
           <div className="relative">
             <img width={15} height={15} src={"./assets/img/searchIcon.png"} className="h-[0.9375rem] w-[0.9375rem] object-contain absolute top-1/2 left-4 -translate-y-1/2" alt="search icon"/>
             <input 
@@ -85,7 +73,7 @@ const Sidebar = () => {
               onChange={(e)=> setSearchQuery(e.target.value)}
               type="text" 
               className='text-base w-full h-11 rounded-lg border border-[#D0D5DD] pl-10 placeholder:text-[#667085] placeholder:font-normal ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50' 
-              placeholder='Search' 
+              placeholder='Search your friends' 
             />
           </div>
         </div>

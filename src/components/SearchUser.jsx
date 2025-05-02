@@ -48,8 +48,8 @@ const SearchUser = () => {
 
   return (
     <>
-      <div className="relative max-w-96">
-        <img width={15} height={15} src={"./assets/img/searchIcon.png"} className="h-[0.9375rem] w-[0.9375rem] object-contain absolute top-1/2 left-4 -translate-y-1/2" alt="search icon"/>
+      <div className="relative w-full lg:max-w-96">
+        <img width={15} height={15} src={"./assets/img/searchIcon.png"} className="h-[0.9375rem] w-[0.9375rem] object-contain absolute top-[22px] lg:top-1/2 left-4 -translate-y-1/2" alt="search icon"/>
         <input 
           value={searchQuery} 
           onChange={(e)=> setSearchQuery(e.target.value)}
@@ -59,7 +59,7 @@ const SearchUser = () => {
         />
         {
           searchQuery?.length ? 
-            <div className="absolute bg-white rounded-lg shadow p-4 w-full left-0 top-[110%]" >
+            <div className="lg:absolute lg:bg-white lg:rounded-lg lg:shadow lg:p-4 w-full left-0 top-[110%] max-lg:mt-8" >
               {
                 isLoading ? "Loadinggggg........." :
                 users?.length ? 

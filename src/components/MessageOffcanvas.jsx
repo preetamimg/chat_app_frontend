@@ -47,7 +47,7 @@ const MessageOffcanvas = () => {
         <BellDot size={20} />
         <div className="absolute size-3 bg-red-600 text-[0.625rem] font-semibold flex items-center justify-center rounded-full top-0 right-0 text-white">{unreadMessages?.length}</div>
       </button>
-      <div className={`z-50 fixed bg-white shadow w-[30rem] h-dvh top-0 right-0 overflow-hidden flex flex-col transition-all duration-500 ${showMessage ? '' : "translate-x-full"}`}>
+      <div className={`z-50 fixed bg-white shadow w-full lg:w-[30rem] h-dvh top-0 right-0 overflow-hidden flex flex-col transition-all duration-500 ${showMessage ? '' : "translate-x-full"}`}>
         <div className="header p-5 border-b border-[#EAECF0] flex justify-between items-center">
           <div className="text-lg font-semibold">Notifications</div>
           <button onClick={handleClose} className='cursor-pointer flex items-center justify-center'>
