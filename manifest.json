@@ -1,0 +1,11 @@
+{
+  "name": "PINGIT",
+  "short_name": "PINGIT",
+  "description": "A real-time chat application with private and group messaging features.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4a90e2",
+  "orientation": "portrait",
+  "lang": "en-US"
+}
