@@ -69,6 +69,9 @@ const Chat = () => {
 
 
   const handleSendMessage = (e) => {
+
+    if(!newMessage?.length && !image?.length) return
+
     e.preventDefault()
     // Send a message
     socket.emit('sendMessage', {
@@ -139,7 +142,7 @@ const Chat = () => {
                     }
                     {
                       item?.content ? 
-                      <div className={`py-2 px-4 text-sm rounded-lg mb-2 w-fit max-w-1/2 ${item?.senderId?._id === user?._id ? "text-righ ml-auto bg-blue-50" : 'bg-slate-50'}`}>
+                      <div className={`py-2 px-4 text-sm rounded-lg mb-2 w-fit max-w-1/2 break-all ${item?.senderId?._id === user?._id ? "text-righ ml-auto bg-blue-50" : 'bg-slate-50'}`}>
                         {item?.content}
                       </div>
                       : ''
@@ -210,7 +213,7 @@ const Chat = () => {
               )}
             </ImageUploading>
           <form className='flex items-center gap-4' onSubmit={handleSendMessage}>
-            <textarea accept="image/*" value={newMessage} onChange={(e)=>setNewMessage(e.target.value)} className='border border-slate-200 w-full flex-1 p-3 h-16 min-h-16 max-h-16 rounded-lg' type="text" />
+            <textarea accept="image/*" value={newMessage} onChange={(e)=>setNewMessage(e.target.value)} className='border pl-16 border-slate-200 w-full flex-1 p-3 h-16 min-h-16 max-h-16 rounded-lg' type="text" />
             <button type='submit' className='commonBtn'>Send</button>
           </form>
         </div>
