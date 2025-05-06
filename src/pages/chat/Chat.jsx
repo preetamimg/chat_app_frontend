@@ -71,7 +71,7 @@ const Chat = () => {
   const handleSendMessage = (e) => {
 
     e.preventDefault()
-    if(!newMessage?.length && !image?.length) return
+    if(!newMessage?.trim().length && !image?.length) return
     // Send a message
     socket.emit('sendMessage', {
       chatId : location?.pathname?.slice(1),
