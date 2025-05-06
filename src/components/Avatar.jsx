@@ -14,7 +14,7 @@ const Avatar = ({name, img}) => {
         alt={`${name} image`}
         src={img}
       /> : 
-      <div className="flex items-center justify-center size-full bg-black text-white font-semibold">{name?.charAt(0)}</div>
+      <div className="flex items-center justify-center size-full bg-black text-white font-semibold uppercase">{name?.charAt(0)}</div>
       }
     </div>
   )

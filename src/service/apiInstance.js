@@ -1,4 +1,4 @@
-import { api, apiAUTH } from "./axiosInstance";
+import { api, apiAUTH, apiFormDataAUTH } from "./axiosInstance";
 
 // no auth token required
 export const getAPI = async (url, body) => {
@@ -26,7 +26,7 @@ export const postAPIAuth = async (url, params) => {
 
 // auth token required
 export const formDataAuth = async (url, params) => {
-    const response = await apiAUTH.post(url, params,{
+    const response = await apiFormDataAUTH.post(url, params,{
       "Content-Type":"multipart/form-data"
     });
     return response;

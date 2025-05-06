@@ -11,6 +11,14 @@ export const apiAUTH = axios.create({
       },
 });
 
+export const apiFormDataAUTH = axios.create({
+  baseURL:BASE_URL,
+  timeout:10000,
+  headers: {
+      "Content-Type":"multipart/form-data"
+    },
+});
+
 export const api = axios.create({
     baseURL: BASE_URL,
     timeout:10000,
@@ -30,6 +38,24 @@ apiAUTH.interceptors.request.use((config)=>{
   });
 
   apiAUTH.interceptors.response.use((response)=>{
+    return response
+  }, function (error) {
+    if(error?.status === 401) {
+      localStorage.removeItem(AUTH_TOKEN)
+    } else return error
+    console.log('erroreeeeeeeeeeeeee', error)
+  });
+
+  apiFormDataAUTH.interceptors.request.use((config)=>{
+    const token =localStorage.getItem(AUTH_TOKEN);
+    
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  });
+
+  apiFormDataAUTH.interceptors.response.use((response)=>{
     return response
   }, function (error) {
     if(error?.status === 401) {

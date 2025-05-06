@@ -81,7 +81,10 @@ const Sidebar = () => {
           <ul className="m-0 p-0 list-none flex-1">
             {
               friendsList?.length ? friendsList?.map((item) => (
-                <li key={item?.friendDetails?._id} onClick={()=> navigate(`/${item?.chatId}`)}>
+                <li key={item?.friendDetails?._id} onClick={()=> {
+                  localStorage.setItem("ACTIVE_CHAT_USER", JSON.stringify(item))
+                  navigate(`/${item?.chatId}`)
+                  }}>
                     <div
                       className={`flex text-[0.9375rem] items-center mb-2 !no-underline rounded-lg gap-2.5 font-semibold text-[#344054] px-4 py-2 group hover:bg-blue-50 [&.active]:bg-blue-50 cursor-pointer ${
                         pathname?.includes(item?.chatId) ? "active" : ""
