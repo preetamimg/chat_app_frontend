@@ -99,7 +99,7 @@ const Sidebar = () => {
                           <div className="line-clamp-1">{item?.friendDetails?.userName}</div>
                           <div className="text-[10px] w-fit bg-white px-1 flex items-center justify-center leading-2.5 h-4 rounded-lg">{moment(item?.messageTime).fromNow()}</div>
                         </div>
-                        <div className="text-xs font-normal text-slate-500 line-clamp-1">{item?.lastMessage}</div>
+                        <div className="text-xs font-normal text-slate-500 line-clamp-1 break-all">{item?.lastMessage}</div>
                       </div>
                       
                     </div>
