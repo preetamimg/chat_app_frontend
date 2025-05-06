@@ -132,7 +132,7 @@ const Chat = () => {
                         item?.mediaUrl?.map(el => (
                           el ? 
                           <div key={el} className={`size-20 rounded-lg overflow-hidden mb-2 ${item?.senderId?._id === user?._id ? "text-righ ml-auto bg-blue-50" : 'bg-slate-50'}`}>
-                            <img className='size-full object-contain' src={`http://localhost:8000/${el}`} alt='img'/>
+                            <img className='size-full object-contain' src={`https://apnicitybackend.onrender.com/${el}`} alt='img'/>
                           </div> : ''
                         ))
                       : ''
