@@ -4,6 +4,7 @@ import React from 'react'
 import { Link, Navigate } from 'react-router';
 import { AUTH_TOKEN } from '../../../constant';
 import useRegister from '../../../hooks/useRegister';
+import Loader from '../../../components/Loader';
 
 
 const Register = () => {
