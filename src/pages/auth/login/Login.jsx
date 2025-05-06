@@ -22,7 +22,7 @@ const Login = () => {
               <Sparkle strokeWidth={2} className='starIcon text-2xl'/>
               <div className="wlcmTxt mt-5 text-3xl font-semibold">Welcome Back</div>
               <div className="detailTxt mb-4 text-sm font-medium text-slate-500">Please enter your details</div>
-              <form className='w-100' onSubmit={formik?.handleSubmit}>
+              <form className='w-full' onSubmit={formik?.handleSubmit}>
                 <div className="customInput">
                   <input 
                       type="text" 

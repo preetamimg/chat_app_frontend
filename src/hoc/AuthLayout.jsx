@@ -14,7 +14,7 @@ const AuthLayout = ({children}) => {
               alt="banner"
               width={1200}
               height={900}
-              className="w-100 h-100 object-fit-cover object authBanner"
+              className="size-full object-fit-cover object authBanner"
             />
           </div>
         </div>
