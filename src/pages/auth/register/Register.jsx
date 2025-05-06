@@ -80,11 +80,16 @@ const Register = () => {
                     className='customCheckbox'
                   /> */}
                 </div>
-                <button type='submit' className='commonBtn w-full mt-3'>Sign up</button>
+                <button disabled={formik.isSubmitting} type='submit' className='commonBtn w-full mt-3 disabled:opacity-70'>
+                  {
+                    formik.isSubmitting ? <Loader isWhite={true}/> : 'Sign up'
+                  }
+                  
+                </button>
               </form>
               <div className="detailTxt mt-3 text-sm font-medium text-slate-500">
                   Already have an account?
-                <Link className='ps-2 text-blue-500' to='/login'>Sign in</Link>
+                <Link className='ps-2 text-[#2B04A6]' to='/login'>Sign in</Link>
               </div>
             </div>
           </div>

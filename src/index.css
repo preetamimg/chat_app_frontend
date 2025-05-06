@@ -48,8 +48,8 @@
 }
 
 .commonBtn {
-  background-color: #155eef;
-  border: 1px solid #155eef;
+  background-color: #2B04A6;
+  border: 1px solid #2B04A6;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -58,10 +58,32 @@
   color: white;
   font-size: 15px;
   font-weight: 600;
-  padding-inline: 12px;
+  padding-inline: 16px;
   white-space: nowrap;
+  gap: 10px;
+  cursor: pointer;
   /* &.sm {
     height: 36px;
     font-size: 14px;
   } */
+}
+
+.loaderComp {
+  width: 60px;
+  aspect-ratio: 4;
+  /* --c:#fff 90%,#0000; */
+  background: 
+    radial-gradient(circle closest-side at left  6px top 50%,var(--c)),
+    radial-gradient(circle closest-side                     ,var(--c)),
+    radial-gradient(circle closest-side at right 6px top 50%,var(--c));
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  animation: l4 1s infinite alternate;
+}
+@keyframes l4 {
+    to{width:25px;aspect-ratio: 1}
+}
+
+.chatScrollDiv {
+  /* background-image: url('https://t3.ftcdn.net/jpg/01/99/79/88/360_F_199798806_PAFfWGapie6Mk8igqKHbhIIa9LwQcvQr.jpg'); */
 }

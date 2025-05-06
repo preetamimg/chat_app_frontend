@@ -5,6 +5,7 @@ import Avatar from './Avatar'
 import { postAPIAuth } from '../service/apiInstance'
 import { toast } from 'react-toastify'
 import useProfile from '../hooks/useProfile'
+import NoData from './NoData'
 
 const FriendRequestOffcanvas = () => {
   const [showFriendRequest, setShowFriendRequest] = useState(false)
@@ -68,7 +69,9 @@ const FriendRequestOffcanvas = () => {
               </div>
             </div>
             ))
-            : "No data"
+            : <div className="flex-1 h-full flex items-center justify-center">
+              <NoData/>
+            </div>
           }
         </div>
       </div>

@@ -47,13 +47,13 @@ const Sidebar = () => {
           <div className="flex max-lg:mb-6 w-full">
             <Link className="lg:mb-6 flex flex-1" to={'/'}>
               <img
-                width={144}
-                height={32}
+                width={176}
+                height={40}
                 loading="lazy"
                 quality={90}
                 alt="logo"
-                src={"./assets/img/logo.png"}
-                className="w-44 h-10 object-contain flex -ml-6"
+                src={"./assets/img/logo1.png"}
+                className="w-auto h-[3.125rem] object-contain flex"
               />
             </Link>
             <div className="flex lg:hidden gap-3">
@@ -88,9 +88,9 @@ const Sidebar = () => {
                   navigate(`/${item?.chatId}`)
                   }}>
                     <div
-                      className={`flex text-[0.9375rem] items-center mb-2 !no-underline rounded-lg gap-2.5 font-semibold text-[#344054] px-4 py-2 group hover:bg-blue-50 [&.active]:bg-blue-50 cursor-pointer ${
-                        pathname?.includes(item?.chatId) ? "active border border-blue-500" : ""
-                      } ${item?.unseenCount ? "bg-blue-50" : ''}`}
+                      className={`flex text-[0.9375rem] items-center mb-2 !no-underline rounded-lg gap-2.5 font-semibold text-[#344054] px-4 py-2 group hover:bg-[#2B04A6]/5 [&.active]:bg-[#2B04A6]/5 cursor-pointer ${
+                        pathname?.includes(item?.chatId) ? "active border border-[#2B04A6]" : ""
+                      } ${item?.unseenCount ? "bg-[#2B04A6]/5" : ''}`}
                     >
                       <div className="relative">
                         <Avatar name={item?.friendDetails?.userName} img={item?.friendDetails?.avtarUrl}/>

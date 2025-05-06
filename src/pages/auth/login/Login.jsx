@@ -4,6 +4,7 @@ import React from 'react'
 import useLogin from '../../../hooks/useLogin';
 import { Link, Navigate } from 'react-router';
 import { AUTH_TOKEN } from '../../../constant';
+import Loader from '../../../components/Loader';
 
 
 const Login = () => {
@@ -65,11 +66,16 @@ const Login = () => {
                     className='customCheckbox'
                   /> */}
                 </div>
-                <button type='submit' className='commonBtn w-full mt-3'>Login</button>
+                <button disabled={formik.isSubmitting} type='submit' className='commonBtn w-full mt-3 disabled:opacity-70'>
+                  {
+                    formik.isSubmitting ? <Loader isWhite={true}/> : 'Login'
+                  }
+                  
+                </button>
               </form>
               <div className="detailTxt mt-3 text-sm font-medium text-slate-500">
                 Don't have an account?
-                <Link className='ps-2 text-blue-500' to='/register'>Sign up</Link>
+                <Link className='ps-2 text-[#2B04A6]' to='/register'>Sign up</Link>
               </div>
             </div>
           </div>

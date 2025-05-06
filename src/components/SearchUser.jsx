@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { postAPIAuth } from '../service/apiInstance'
 import Avatar from './Avatar'
 import { toast } from 'react-toastify'
+import Loader from './Loader'
+import NoData from './NoData'
 
 const SearchUser = () => {
   const [searchQuery, setSearchQuery] = useState("")
@@ -61,7 +63,11 @@ const SearchUser = () => {
           searchQuery?.length ? 
             <div className="lg:absolute lg:bg-white lg:rounded-lg lg:shadow lg:p-4 w-full left-0 top-[110%] max-lg:mt-8" >
               {
-                isLoading ? "Loadinggggg........." :
+                isLoading ? 
+                  <div className="flex items-center justify-center min-h-36">
+                    <Loader/>
+                  </div>
+                :
                 users?.length ? 
                   users?.map(item => (
                     <div key={item?._id} className="flex p-4 mb-2 border border-slate-300 rounded-lg justify-between items-center">
@@ -76,13 +82,15 @@ const SearchUser = () => {
                       </div>
                       {
                         item?.isAlreadyFriend ? '' : item?.friendRequestStatus ? 
-                        <button disabled className='bg-black text-white rounded-md text-xs font-semibold px-4 h-9 disabled:opacity-50'>Already Sent</button>
+                        <button disabled className='bg-[#2B04A6] text-white rounded-md text-xs font-semibold px-4 h-9 disabled:opacity-50'>Already Sent</button>
                         : 
-                        <button onClick={()=>handleSendFriendRequest(item?._id)} className='bg-black text-white rounded-md text-xs font-semibold px-4 h-9 cursor-pointer'>Add Friend</button>
+                        <button onClick={()=>handleSendFriendRequest(item?._id)} className='bg-[#2B04A6] text-white rounded-md text-xs font-semibold px-4 h-9 cursor-pointer'>Add Friend</button>
                       }
                     </div>
                   ))
-                : "No data"
+                : <div className="a">
+                  <NoData/>
+                </div>
               }
             </div>
           : ''

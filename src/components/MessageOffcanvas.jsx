@@ -3,6 +3,7 @@ import { socket } from '../service/socket'
 import { BellDot, UserPlus, X } from 'lucide-react'
 import { getAPIAuth } from '../service/apiInstance'
 import useProfile from '../hooks/useProfile'
+import NoData from './NoData'
 
 
 const MessageOffcanvas = () => {
@@ -69,7 +70,9 @@ const MessageOffcanvas = () => {
               </div>
             </div>
             ))
-            : "No data"
+            : <div className="flex-1 h-full flex items-center justify-center">
+            <NoData/>
+          </div>
           }
         </div>
       </div>

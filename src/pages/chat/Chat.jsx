@@ -4,7 +4,7 @@ import { socket } from '../../service/socket';
 import useProfile from '../../hooks/useProfile';
 import { useLocation } from 'react-router';
 import { formDataAuth, postAPIAuth } from '../../service/apiInstance';
-import { ImageUp, Trash2 } from 'lucide-react';
+import { ImageUp, SendHorizontal, Trash2 } from 'lucide-react';
 import ImageUploading from "react-images-uploading";
 import moment from 'moment';
 import Avatar from '../../components/Avatar';
@@ -142,7 +142,7 @@ const Chat = () => {
     <>
     <Layout>
       <div className="flex flex-col h-full overflow-hidden">
-        <div ref={chatRef} className="flex-1 h-full overflow-y-auto p-5">
+        <div ref={chatRef} className="flex-1 h-full overflow-y-auto p-5 chatScrollDiv">
           {
             messages?.length ?
               messages?.map(item => (
@@ -232,7 +232,10 @@ const Chat = () => {
             </ImageUploading>
           <form className='flex items-center gap-4' onSubmit={handleSendMessage}>
             <textarea accept="image/*" value={newMessage} onChange={(e)=>setNewMessage(e.target.value)} className='border pl-16 border-slate-200 w-full flex-1 p-3 h-16 min-h-16 max-h-16 rounded-lg' type="text" />
-            <button type='submit' className='commonBtn'>Send</button>
+            <button type='submit' className='commonBtn'>
+              Send
+              <SendHorizontal size={16} />
+            </button>
           </form>
         </div>
       </div>
