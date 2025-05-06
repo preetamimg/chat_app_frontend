@@ -3,6 +3,7 @@ import SearchUser from './SearchUser'
 import FriendRequestOffcanvas from './FriendRequestOffcanvas'
 import MessageOffcanvas from './MessageOffcanvas'
 import SearchUserOffcanvas from './SearchUserOffcanvas'
+import HeaderUser from './HeaderUser'
 
 const Header = () => {
 
@@ -10,7 +11,8 @@ const Header = () => {
     <>
       <div className='p-5 border-b border-[#EAECF0]'>
         <div className="flex gap-3">
-          <div className="flex-1">
+          <HeaderUser/>
+          <div className="fle ml-auto lg:w-96">
             <div className="w-full hidden lg:flex">
               <SearchUser/>
             </div>

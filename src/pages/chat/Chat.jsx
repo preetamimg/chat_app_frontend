@@ -3,7 +3,7 @@ import Layout from '../../hoc/Layout'
 import { socket } from '../../service/socket';
 import useProfile from '../../hooks/useProfile';
 import { useLocation } from 'react-router';
-import { formDataAuth } from '../../service/apiInstance';
+import { formDataAuth, postAPIAuth } from '../../service/apiInstance';
 import { ImageUp, Trash2 } from 'lucide-react';
 import ImageUploading from "react-images-uploading";
 import moment from 'moment';
@@ -27,6 +27,25 @@ const Chat = () => {
   }, [location?.pathname]);
 
   console.log("chatUser", chatUser)
+
+  const updateMsgStatus = async ()=> {
+    try {
+      const payload = {
+        chatId : location?.pathname?.slice(1),
+        userId : user?._id
+      }
+      const res = await postAPIAuth("chat/changeMessageStatus", payload)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(()=> {
+    if(user?._id && location?.pathname?.slice(1)) {
+      updateMsgStatus()
+    }
+
+  }, [user?._id, location?.pathname?.slice(1)])
 
 
   const onChange = (imageList, addUpdateIndex) => {

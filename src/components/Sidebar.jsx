@@ -32,6 +32,8 @@ const Sidebar = () => {
     });
   }, [token])
 
+  console.log("friendsListfriendsListfriendsList", friendsList)
+
 
 
   return (
@@ -87,8 +89,8 @@ const Sidebar = () => {
                   }}>
                     <div
                       className={`flex text-[0.9375rem] items-center mb-2 !no-underline rounded-lg gap-2.5 font-semibold text-[#344054] px-4 py-2 group hover:bg-blue-50 [&.active]:bg-blue-50 cursor-pointer ${
-                        pathname?.includes(item?.chatId) ? "active" : ""
-                      }`}
+                        pathname?.includes(item?.chatId) ? "active border border-blue-500" : ""
+                      } ${item?.unseenCount ? "bg-blue-50" : ''}`}
                     >
                       <div className="relative">
                         <Avatar name={item?.friendDetails?.userName} img={item?.friendDetails?.avtarUrl}/>
@@ -97,7 +99,11 @@ const Sidebar = () => {
                       <div className="w-full">
                         <div className="flex justify-between items-center w-full">
                           <div className="line-clamp-1">{item?.friendDetails?.userName}</div>
-                          <div className="text-[10px] w-fit bg-white px-1 flex items-center justify-center leading-2.5 h-4 rounded-lg">{moment(item?.messageTime).fromNow()}</div>
+                          <div className="text-[0.625rem] w-fit bg-white px-1 flex items-center justify-center leading-2.5 h-4 rounded-lg">{moment(item?.messageTime).fromNow()}</div>
+                            {
+                              pathname?.includes(item?.chatId) ? "" : item?.unseenCount ?
+                              <div className="text-[0.625rem] font-semibold text-white bg-blue-500 size-3 rounded-full flex items-center justify-center">{item?.unseenCount}</div> : ''
+                            }
                         </div>
                         <div className="text-xs font-normal text-slate-500 line-clamp-1 break-all">{item?.lastMessage}</div>
                       </div>
