@@ -7,8 +7,8 @@ const SearchUserOffcanvas = () => {
 
   return (
     <>
-      <button onClick={()=>setShowSearch(true)} className='relative size-11 rounded-lg border border-[#D0D5DD] flex items-center justify-center text-[#667085] font-semibold cursor-pointer'>
-        <Search size={20} />
+      <button onClick={()=>setShowSearch(true)} className='relative size-9 lg:size-11 rounded-md lg:rounded-lg border border-[#D0D5DD] flex items-center justify-center text-[#667085] font-semibold cursor-pointer'>
+        <Search className='size-4 lg:size-5'/>
       </button>
       <div className={`z-50 fixed bg-white shadow w-full lg:w-[30rem] h-dvh top-0 right-0 overflow-hidden flex flex-col transition-all duration-500 ${showSearch ? '' : "translate-x-full"}`}>
         <div className="header p-5 border-b border-[#EAECF0] flex justify-between items-center">

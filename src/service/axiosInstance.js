@@ -1,5 +1,6 @@
 import axios from "axios";
 import { AUTH_TOKEN, BASE_URL } from "../constant";
+import { navigateTo } from "../utils/navigate";
 
 // remove the CORS proxy once the CORS error is fixed
 export const apiAUTH = axios.create({
@@ -42,6 +43,7 @@ apiAUTH.interceptors.request.use((config)=>{
   }, function (error) {
     if(error?.status === 401) {
       localStorage.removeItem(AUTH_TOKEN)
+      navigateTo("/login")
     } else return error
     console.log('erroreeeeeeeeeeeeee', error)
   });
@@ -60,6 +62,7 @@ apiAUTH.interceptors.request.use((config)=>{
   }, function (error) {
     if(error?.status === 401) {
       localStorage.removeItem(AUTH_TOKEN)
+      navigateTo("/login")
     } else return error
     console.log('erroreeeeeeeeeeeeee', error)
   });

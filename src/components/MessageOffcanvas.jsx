@@ -44,8 +44,8 @@ const MessageOffcanvas = () => {
 
   return (
     <>
-      <button onClick={()=>setShowMessage(true)} className='relative size-11 rounded-lg border border-[#D0D5DD] flex items-center justify-center text-[#667085] font-semibold cursor-pointer'>
-        <BellDot size={20} />
+      <button onClick={()=>setShowMessage(true)} className='relative size-9 lg:size-11 rounded-md lg:rounded-lg border border-[#D0D5DD] flex items-center justify-center text-[#667085] font-semibold cursor-pointer'>
+        <BellDot className='size-4 lg:size-5' />
         <div className="absolute size-3 bg-red-600 text-[0.625rem] font-semibold flex items-center justify-center rounded-full top-0 right-0 text-white">{unreadMessages?.length}</div>
       </button>
       <div className={`z-50 fixed bg-white shadow w-full lg:w-[30rem] h-dvh top-0 right-0 overflow-hidden flex flex-col transition-all duration-500 ${showMessage ? '' : "translate-x-full"}`}>
@@ -59,11 +59,11 @@ const MessageOffcanvas = () => {
           {
             notifications?.length ?
             notifications?.map(item => (
-              <div key={item?._id} className={`flex p-4 mb-2 border border-slate-300 rounded-lg justify-between items-center ${item?.isRead ? 'opacity-40' : ''}`}>
+              <div key={item?._id} className={`flex p-3 lg:p-4 mb-2 border border-slate-300 rounded-lg justify-between items-center ${item?.isRead ? 'opacity-40' : ''}`}>
               <div className="a">
                 <div className="flex items-center gap-3">
                   <div className="a">
-                    <div className="font-semibold">{item?.message}</div>
+                    <div className="text-xs lg:text-sm font-semibold">{item?.message}</div>
                     {/* <div className="font-normal text-sm">{item?.from?.email}</div> */}
                   </div>
                 </div>

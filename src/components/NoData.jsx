@@ -1,6 +1,6 @@
 import React from 'react'
 
-const NoData = () => {
+const NoData = ({title, desc}) => {
   return (
     <>
        <div class="w-full flex items-center flex-wrap justify-center gap-10">
@@ -13,8 +13,8 @@ const NoData = () => {
 </svg>
 </div>
 <div>
-<h2 class="text-center text-black text-base font-semibold leading-relaxed pb-1">No data found</h2>
-<p class="text-center text-black text-sm font-normal leading-snug pb-4">Try changing your filters to <br />see data </p>
+<h2 class="text-center text-black text-base font-semibold leading-relaxed pb-1">{title ? title : "No data found"}</h2>
+<p class="text-center text-black text-sm font-normal leading-snug pb-4">{desc ? desc : "Try changing your filters to see data"} </p>
 </div>
 </div>
 </div>

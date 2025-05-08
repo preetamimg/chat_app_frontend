@@ -8,11 +8,13 @@ import { socket } from "../service/socket";
 import FriendRequestOffcanvas from "./FriendRequestOffcanvas";
 import MessageOffcanvas from "./MessageOffcanvas";
 import SearchUserOffcanvas from "./SearchUserOffcanvas";
+import NoData from "./NoData";
+import UserProfileOffcanvas from "./UserProfileOffcanvas";
 
 const Sidebar = () => {
   const navigate = useNavigate()
   const pathname = useLocation().pathname
-  const {token, user, handleSignOut} = useProfile()
+  const {token} = useProfile()
   const [ showSidebar, setShowSidebar ] = useState(false);
   const [friendsList, setFriendList] = useState([])
   const [searchQuery, setSearchQuery] = useState("")
@@ -43,9 +45,9 @@ const Sidebar = () => {
           pathname === "/" ? "" : "max-lg:-translate-x-full"
         }`}
       >
-        <div className="sidebarHeader p-6">
-          <div className="flex max-lg:mb-6 w-full">
-            <Link className="lg:mb-6 flex flex-1" to={'/'}>
+        <div className="sidebarHeader p-6 max-lg:p-4 max-lg:border-b border-[#EAECF0]">
+          <div className="flex w-full">
+            <Link className="lg:mb-6 flex flex-1 max-lg:-ml-1" to={'/'}>
               <img
                 width={176}
                 height={40}
@@ -53,22 +55,26 @@ const Sidebar = () => {
                 quality={90}
                 alt="logo"
                 src={"./assets/img/logo1.png"}
-                className="w-auto h-[3.125rem] object-contain flex"
+                className="w-auto h-10 lg:h-[3.125rem] object-contain flex"
               />
             </Link>
-            <div className="flex lg:hidden gap-3">
-              <div className="a">
-                <SearchUserOffcanvas/>
-              </div>
-              <div className="a">
-                <FriendRequestOffcanvas/>
-              </div>
-              <div className="a">
-                <MessageOffcanvas/>
-              </div>
-            </div>
+            {
+              pathname === "/" ? 
+                <div className="flex lg:hidden gap-2">
+                  <div className="a">
+                    <SearchUserOffcanvas/>
+                  </div>
+                  <div className="a">
+                    <FriendRequestOffcanvas/>
+                  </div>
+                  <div className="a">
+                    <MessageOffcanvas/>
+                  </div>
+                </div>
+              : ''
+            }
           </div>
-          <div className="relative">
+          <div className="hidden lg:flex relative">
             <img width={15} height={15} src={"./assets/img/searchIcon.png"} className="h-[0.9375rem] w-[0.9375rem] object-contain absolute top-1/2 left-4 -translate-y-1/2" alt="search icon"/>
             <input 
               value={searchQuery} 
@@ -79,8 +85,8 @@ const Sidebar = () => {
             />
           </div>
         </div>
-        <div className="sidebarContent h-full flex-1 overflow-y-auto px-4 flex flex-col">
-          <ul className="m-0 p-0 list-none flex-1">
+        <div className="sidebarContent h-full flex-1 overflow-y-auto px-0 lg:px-4 flex flex-col">
+          <ul className="m-0 p-0 list-none h-full">
             {
               friendsList?.length ? friendsList?.map((item) => (
                 <li key={item?.friendDetails?._id} onClick={()=> {
@@ -94,38 +100,35 @@ const Sidebar = () => {
                     >
                       <div className="relative">
                         <Avatar name={item?.friendDetails?.userName} img={item?.friendDetails?.avtarUrl}/>
-                        {/* <div className="absolute right-0 bottom-0 size-1.5 rounded-full bg-green-500"></div> */}
                       </div>
                       <div className="w-full">
                         <div className="flex justify-between items-center w-full">
                           <div className="line-clamp-1">{item?.friendDetails?.userName}</div>
-                          <div className="text-[0.625rem] w-fit bg-white px-1 flex items-center justify-center leading-2.5 h-4 rounded-lg">{moment(item?.messageTime).fromNow()}</div>
+                          <div className="flex gap-1 items-center">
                             {
-                              pathname?.includes(item?.chatId) ? "" : item?.unseenCount ?
-                              <div className="text-[0.625rem] font-semibold text-white bg-blue-500 size-3 rounded-full flex items-center justify-center">{item?.unseenCount}</div> : ''
+                              item?.lastMessage ? 
+                              <div className="text-[0.625rem] w-fit bg-white px-1 flex items-center justify-center leading-2.5 h-4 rounded-lg">{moment(item?.messageTime).fromNow()}</div>
+                              : ''
                             }
+                              {
+                                pathname?.includes(item?.chatId) ? "" : item?.unseenCount ?
+                                <div className="text-[0.5rem] lg:text-[0.625rem] font-semibold text-white bg-blue-500 size-3 rounded-full flex items-center justify-center">{item?.unseenCount}</div> : ''
+                              }
+                          </div>
                         </div>
                         <div className="text-xs font-normal text-slate-500 line-clamp-1 break-all">{item?.lastMessage}</div>
                       </div>
                       
                     </div>
                 </li>
-              )) : "No friends yet"
+              )) : <div className="flex-1 h-full flex items-center justify-center">
+                <NoData title="No Friends found" desc="Make friends and start chat"/>
+              </div>
             }
           </ul>
-
-          <div className="flex items-center gap-3 border-t border-[#EAECF0] py-5 pb-7">
-            <div className="size-10 rounded-full overflow-hidden">
-              <Avatar name={user?.userName} img={user?.avtarUrl}/>
-            </div>
-            <div className="flex-1">
-              <div className="flex items-center justify-between text-sm font-semibold text-[#344054]">
-                {user?.userName ? user?.userName : ''}
-                <img onClick={handleSignOut} className="cursor-pointer ml-auto size-5" width={15} height={15} src={"./assets/img/logoutIcon.png"} alt="user"/>
-              </div>
-              <div className="text-[#475467] text-xs font-normal">{user?.email ? user?.email : ''}</div>
-            </div>
-          </div>
+        </div>
+        <div className="sidebarBottom px-4">
+          <UserProfileOffcanvas/>
         </div>
       </div>
       <div

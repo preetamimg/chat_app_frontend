@@ -160,12 +160,12 @@ const Chat = () => {
                     }
                     {
                       item?.content ? 
-                      <div className={`py-2 px-4 text-sm rounded-lg mb-2 w-fit max-w-1/2 break-all ${item?.senderId?._id === user?._id ? "text-righ ml-auto bg-blue-50" : 'bg-slate-50'}`}>
+                      <div className={`py-1.5 lg:py-2 px-3 lg:px-4 text-xs lg:text-sm rounded-lg mb-2 w-fit max-w-1/2 break-all ${item?.senderId?._id === user?._id ? "text-righ ml-auto bg-blue-50" : 'bg-slate-50'}`}>
                         {item?.content}
                       </div>
                       : ''
                     }
-                    <div className={`text-[0.625rem] font-semibold ${item?.senderId?._id === user?._id ? 'text-end' : ''}`}>{moment(item?.createdAt).fromNow()}</div>
+                    <div className={`text-[0.5rem] lg:text-[0.625rem] font-semibold ${item?.senderId?._id === user?._id ? 'text-end' : ''}`}>{moment(item?.createdAt).fromNow()}</div>
                   </div>
                   <div className="a">
                     {
@@ -179,11 +179,7 @@ const Chat = () => {
             : "no message"
           }
         </div>
-        <div className="border-t border-slate-200 p-5 relative">
-          {/* <input id='image' type="file" className='hidden' onChange={handleImageChange} /> */}
-          {/* <label htmlFor="image" className='size-10 flex items-center justify-center rounded-full bg-blue-50 absolute left-8 cursor-pointer top-1/2 -translate-y-1/2'>
-            <ImageUp size={20} />
-          </label> */}
+        <div className="border-t border-slate-200 p-4 lg:p-5 relative">
           <ImageUploading
               multiple
               value={images}
@@ -205,7 +201,7 @@ const Chat = () => {
                 <div className="upload__image-wrapper">
                   <button
                     style={isDragging ? { color: "red" } : null}
-                    className={`size-10 flex items-center justify-center rounded-full bg-blue-50 absolute left-8 cursor-pointer bottom-8`}
+                    className={`size-10 flex items-center justify-center rounded-full absolute left-6 cursor-pointer bottom-5 lg:bottom-6`}
                     onClick={onImageUpload}
                     {...dragProps}
                   >
@@ -231,9 +227,9 @@ const Chat = () => {
               )}
             </ImageUploading>
           <form className='flex items-center gap-4' onSubmit={handleSendMessage}>
-            <textarea accept="image/*" value={newMessage} onChange={(e)=>setNewMessage(e.target.value)} className='border pl-16 border-slate-200 w-full flex-1 p-3 h-16 min-h-16 max-h-16 rounded-lg' type="text" />
-            <button type='submit' className='commonBtn'>
-              Send
+            <textarea value={newMessage} onChange={(e)=>setNewMessage(e.target.value)} className='border pl-12 border-slate-200 w-full flex-1 p-3 h-12 min-h-12 max-h-12 rounded-lg text-sm ' placeholder='Type a message...' />
+            <button type='submit' className='commonBtn max-lg:!size-10 max-lg:!rounded-full max-lg:!p-0 max-lg:overflow-hidden'>
+              <span className='hidden lg:flex'>Send</span>
               <SendHorizontal size={16} />
             </button>
           </form>

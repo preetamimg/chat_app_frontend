@@ -18,7 +18,6 @@ const ProfileContextProvider = ({children}) => {
   const fetchUserDetails = async () => {
     try {
       const res = await getAPIAuth('user/getUserDetails')
-      console.log(">>>>>>>>>>>>>>>>>>>>", res)
       if(res?.data?.success) {
         setUser(res?.data?.data)
       }
@@ -41,7 +40,7 @@ const ProfileContextProvider = ({children}) => {
   }
   
   return (
-    <ProfileContext.Provider value={{user, setUser, token, setToken, handleSignOut}}>
+    <ProfileContext.Provider value={{user, setUser, token, setToken, handleSignOut, fetchUserDetails}}>
       {children}
     </ProfileContext.Provider>
   )

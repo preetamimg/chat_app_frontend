@@ -2,7 +2,7 @@ import React from 'react'
 
 const Avatar = ({name, img}) => {
   return (
-    <div className="size-10 rounded-full overflow-hidden">
+    <div className="size-8 lg:size-10 rounded-full overflow-hidden">
       {
         img ?    
         <img
@@ -14,7 +14,7 @@ const Avatar = ({name, img}) => {
         alt={`${name} image`}
         src={img}
       /> : 
-      <div className="flex items-center justify-center size-full bg-[#2B04A6] text-white font-semibold uppercase">{name?.charAt(0)}</div>
+      <div className="flex items-center justify-center size-full bg-[#2B04A6] text-white  text-xs lg:text-sm font-semibold uppercase">{name?.charAt(0)}</div>
       }
     </div>
   )
