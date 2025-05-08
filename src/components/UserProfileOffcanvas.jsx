@@ -85,7 +85,7 @@ const UserProfileOffcanvas = ({isAnother, anotherUser}) => {
           <div className="flex items-center justify-center flex-col">
             <input className='hidden' id='profileImg' type="file" accept='image/*' onChange={handleChange} />
             <div className="relative size-40 rounded-full bg-[#2B04A6]/5 flex items-center justify-center uppercase font-semibold text-2xl">
-              <div className="size-full overflow-hidden rounded-full">
+              <div className="size-full overflow-hidden rounded-full flex items-center justify-center">
                 {
                   isAnother ? 
                     anotherUser?.avtarUrl ? 
