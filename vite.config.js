@@ -5,9 +5,9 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 
 const manifest = {
-  name: 'My React App',
-  short_name: 'React App',
-  description: 'A simple React application',
+  name: 'Hivein',
+  short_name: 'Hivein',
+  description: 'A real-time chat application with private and group messaging features',
   icons: [
     {
       src: "./assets/img/favicon-16x16.png",
@@ -32,7 +32,7 @@ const manifest = {
   ],
   start_url: '/',
   display: 'standalone',
-  theme_color: '#ffffff',
+  theme_color: '#2B04A6',
   background_color: '#ffffff'
 }
 
