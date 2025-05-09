@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ArrowLeft, Pencil, Search, X } from 'lucide-react'
+import { ArrowLeft, Pencil, Search, Trash2, X } from 'lucide-react'
 import SearchUser from './SearchUser'
 import useProfile from '../hooks/useProfile'
 import Avatar from './Avatar'
@@ -94,6 +94,8 @@ const UserProfileOffcanvas = ({isAnother, anotherUser}) => {
               <div className="size-full overflow-hidden rounded-full flex items-center justify-center">
                 {
                   isAnother ? 
+                    anotherUser?.isGroup ? 
+                    <img src={anotherUser?.groupImage} className='size-full object-cover' alt='image'/> :
                     anotherUser?.avtarUrl ? 
                     <img src={anotherUser?.avtarUrl} className='size-full object-cover' alt='image'/>
                   : anotherUser?.userName?.charAt(0)
@@ -110,8 +112,46 @@ const UserProfileOffcanvas = ({isAnother, anotherUser}) => {
                 </label>
               }
             </div>
-            <div className="text-lg font-semibold mt-4 capitalize">{isAnother ? anotherUser?.userName : user?.userName}</div>
-            <div className="text-sm text-gray-500">{isAnother ? anotherUser?.email : user?.email}</div>
+            <div className="text-lg font-semibold mt-4 capitalize">{isAnother ? (anotherUser?.isGroup ? anotherUser?.groupName : anotherUser?.userName) : user?.userName}</div>
+            <div className="text-sm text-gray-500">{isAnother ? anotherUser?.isGroup ? anotherUser?.groupDescription : anotherUser?.email : user?.email}</div>
+            {
+              anotherUser?.isGroup ? 
+                <>
+                  <div className="w-full my-3 text-sm font-medium">Group members</div>
+                  <div className="w-full">
+                    {
+                      anotherUser?.participants?.length ? 
+                        anotherUser?.participants?.map(item => (
+                          <div key={item?._id} 
+                        className="flex p-3 lg:p-3 mb-2 border border-slate-300 rounded-lg justify-between items-center">
+                          <div className="w-full">
+                            <div className="flex items-center gap-2 w-full justify-between">
+                              <div className="flex items-center gap-2">
+                                <Avatar name={item?.userName}/>
+                                <div className="flex-1">
+                                  <div className="text-sm font-semibold line-clamp-1">{item?._id === user?._id ? "You" : item?.userName}</div>
+                                  <div className="font-normal text-xs lg:text-sm line-clamp-1">{item?.email}</div>
+                                </div>
+                              </div>
+                              {
+                                item?._id === anotherUser?.groupAdmin?.[0] ? 
+                                <div className="ml-auto text-xs font-medium bg-green-100 text-green-500 px-2 h-5 flex items-center justify-center rounded-full">Admin</div>
+                                : anotherUser?.groupAdmin?.[0] === user?._id ? 
+                                  <button className="flex items-center justify-center size-8 bg-red-500 rounded-full text-white">
+                                    <Trash2 size={16}/>
+                                  </button> 
+                                : ''
+                              }
+                            </div>
+                          </div>
+                        </div>
+                        ))
+                      : ''
+                    }
+                  </div>
+                </>
+              : ''
+            }
           </div>
         </div>
       </div>
