@@ -27,6 +27,8 @@ const CreateGroupOffcanvas = ({fetchGroupList}) => {
 
     if(res?.data?.success) {
       toast.success(res?.data?.message)
+      formik.resetForm()
+      setShowOffcanvas(false)
       fetchGroupList()
     }
   }

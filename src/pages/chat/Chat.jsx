@@ -3,12 +3,13 @@ import Layout from '../../hoc/Layout'
 import { socket } from '../../service/socket';
 import useProfile from '../../hooks/useProfile';
 import { useLocation } from 'react-router';
-import { formDataAuth, postAPIAuth } from '../../service/apiInstance';
+import { formDataAuth, getAPIAuth, postAPIAuth } from '../../service/apiInstance';
 import { ImageUp, SendHorizontal, Trash2 } from 'lucide-react';
 import ImageUploading from "react-images-uploading";
 import moment from 'moment';
 import Avatar from '../../components/Avatar';
 import EmptyChat from '../../components/EmptyChat';
+import ImageCarousel from '../../components/ImageCarousel';
 
 const Chat = () => {
   const chatRef = useRef()
@@ -19,15 +20,9 @@ const Chat = () => {
   const [receivedMsg, setReceivedMsg] = useState([])
   const [image, setImage] = useState([])
   const [images, setImages] = React.useState([]);
-  const [chatUser, setChatUser] = useState({})
-
-  useEffect(()=> {
-    const userDetails = localStorage.getItem("ACTIVE_CHAT_USER");
-    const a = JSON.parse(userDetails)
-    setChatUser(a)
-  }, [location?.pathname]);
-
-  console.log("chatUser", chatUser)
+  const [chatImages, setChatImages] = useState([])
+  const [showImage, setShowImage] = useState(false)
+  const [activeIndex, setActiveIndex] = useState(0)
 
   const updateMsgStatus = async ()=> {
     try {
@@ -36,6 +31,18 @@ const Chat = () => {
         userId : user?._id
       }
       const res = await postAPIAuth("chat/changeMessageStatus", payload)
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const fetchChatImages = async ()=> {
+    try {
+      const res = await getAPIAuth(`chat/getImages?id=${location?.pathname?.slice(1)}`)
+      if(res?.data?.success) {
+        setChatImages(res?.data?.data)
+      }
     } catch (error) {
       console.log(error)
     }
@@ -43,10 +50,11 @@ const Chat = () => {
 
   useEffect(()=> {
     if(user?._id && location?.pathname?.slice(1)) {
-      updateMsgStatus()
+      updateMsgStatus();
+      fetchChatImages()
     }
-
   }, [user?._id, location?.pathname?.slice(1)])
+
 
 
   const onChange = (imageList, addUpdateIndex) => {
@@ -113,14 +121,8 @@ const Chat = () => {
     }
   }, [messages]);
 
-  // const handleImageChange = (e) => {
-  //   e.preventDefault();
+  console.log("messagesssssssssssssssssssssssss", messages)
 
-  //   const img = e.target.files ? e.target.files?.[0] : ''
-  //   if(img) {
-  //     handleImageUpload(img)
-  //   }
-  // }
 
   const handleImageUpload = async (img) => {
     try {
@@ -137,8 +139,11 @@ const Chat = () => {
     }
   }
 
-  console.log("messagessssssssssssssssssssssssssss", messages)
-
+  const handleImgPreview = (el)=> {
+    const requiredIndex = chatImages.indexOf(el);
+    setActiveIndex(requiredIndex);
+    setShowImage(true)
+  }
 
 
   return (
@@ -155,8 +160,8 @@ const Chat = () => {
                       item?.mediaUrl?.length ? 
                         item?.mediaUrl?.map(el => (
                           el ? 
-                          <div key={el} className={`size-20 rounded-lg overflow-hidden mb-2 ${item?.senderId?._id === user?._id ? "text-righ ml-auto bg-blue-50" : 'bg-slate-50'}`}>
-                            <img className='size-full object-contain' src={`https://apnicitybackend.onrender.com/${el}`} alt='img'/>
+                          <div onClick={()=> handleImgPreview(el?.img)} key={el?.img} className={`size-20 rounded-lg overflow-hidden mb-2 ${item?.senderId?._id === user?._id ? "text-righ ml-auto bg-blue-50" : 'bg-slate-50'}`}>
+                            <img className='size-full object-contain' src={el?.img} alt='img'/>
                           </div> : ''
                         ))
                       : ''
@@ -196,8 +201,6 @@ const Chat = () => {
               {({
                 imageList,
                 onImageUpload,
-                onImageRemoveAll,
-                onImageUpdate,
                 onImageRemove,
                 isDragging,
                 dragProps
@@ -210,17 +213,13 @@ const Chat = () => {
                     onClick={onImageUpload}
                     {...dragProps}
                   >
-                    {/* <div className='size-10 flex items-center justify-center rounded-full bg-blue-50 absolute left-8 cursor-pointer top-1/2 -translate-y-1/2'> */}
                       <ImageUp size={20} />
-                    {/* </div> */}
                   </button>
-                  {/* <button onClick={onImageRemoveAll}>Remove all images</button> */}
                   <div className={`flex gap-3 flex-wrap ${imageList?.length ? "mb-3" : ''}`}>
                     {imageList?.map((image, index) => (
                       <div key={index} className="image-item size-20 rounded-md bg-slate-50 overflow-hidden relative">
                         <img src={image.data_url} alt="" width="100" className='size-full object-contain' />
                         <div className="image-item__btn-wrapper">
-                          {/* <button onClick={() => onImageUpdate(index)}>Update</button> */}
                           <button onClick={() => onImageRemove(index)} className='absolute size-6 bg-red-500 z-10 top-1 right-1 text-white rounded-full flex items-center justify-center'>
                             <Trash2 size={14} />
                           </button>
@@ -241,6 +240,7 @@ const Chat = () => {
         </div>
       </div>
     </Layout>
+    <ImageCarousel images={chatImages} show={showImage} setShow={setShowImage} activeIndex={activeIndex} setActiveIndex={setActiveIndex}/>
   </>
   )
 }
