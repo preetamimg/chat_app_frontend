@@ -10,6 +10,7 @@ import moment from 'moment';
 import Avatar from '../../components/Avatar';
 import EmptyChat from '../../components/EmptyChat';
 import ImageCarousel from '../../components/ImageCarousel';
+import AudioCall from '../../components/AudioCall';
 
 const Chat = () => {
   const chatRef = useRef()
@@ -155,6 +156,7 @@ const Chat = () => {
     <Layout>
       <div className="flex flex-col h-full overflow-hidden">
         <div ref={chatRef} className="flex-1 h-full overflow-y-auto p-5 chatScrollDiv">
+        {/* <AudioCall userId={user?._id} peerId={location?.pathname?.slice(1)}/> */}
           {
             messages?.length ?
               messages?.map(item => (
@@ -243,6 +245,7 @@ const Chat = () => {
           </form>
         </div>
       </div>
+      
     </Layout>
     <ImageCarousel images={chatImages} show={showImage} setShow={setShowImage} activeIndex={activeIndex} setActiveIndex={setActiveIndex}/>
   </>

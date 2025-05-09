@@ -1,6 +1,6 @@
 
-import { Eye, Sparkle } from 'lucide-react'
-import React from 'react'
+import { Eye, EyeOff, Sparkle } from 'lucide-react'
+import React, { useState } from 'react'
 import { Link, Navigate } from 'react-router';
 import { AUTH_TOKEN } from '../../../constant';
 import useRegister from '../../../hooks/useRegister';
@@ -10,6 +10,7 @@ import Loader from '../../../components/Loader';
 const Register = () => {
   const formik = useRegister();
   const token = localStorage.getItem(AUTH_TOKEN);
+  const [showPassword, setShowPassword] = useState(false)
 
   if (token) return <Navigate to="/"/>
 
@@ -56,7 +57,7 @@ const Register = () => {
                   <div className="customInput">
                     <div className="relative">
                     <input 
-                      type="text" 
+                      type={showPassword ? "text" : "password"} 
                       name='password'
                       id='password'
                       placeholder='Password'
@@ -65,8 +66,12 @@ const Register = () => {
                       onBlur={formik.handleBlur}
                       className={`form-control ${formik.touched.password && formik.errors.password ? 'inputError' : ''}`}
                     />
-                      <div className="eyeIcon">
-                        <Eye size={16} />
+                      <div className="eyeIcon cursor-pointer" onClick={()=> setShowPassword(!showPassword)}>
+                        {
+                          showPassword ? 
+                          <EyeOff size={16} />
+                          : <Eye size={16} />
+                        }
                       </div>
                     </div>
                     {formik.touched.password && formik.errors.password && (
@@ -74,18 +79,11 @@ const Register = () => {
                     )}
                   </div>
                 <div className="d-flex align-items-center justify-content-between">
-                  {/* <Form.Check // prettier-ignore
-                    type={'checkbox'}
-                    id={`rememberMe`}
-                    label={`Remember Me`}
-                    className='customCheckbox'
-                  /> */}
                 </div>
                 <button disabled={formik.isSubmitting} type='submit' className='commonBtn w-full mt-3 disabled:opacity-70'>
                   {
                     formik.isSubmitting ? <Loader isWhite={true}/> : 'Sign up'
                   }
-                  
                 </button>
               </form>
               <div className="detailTxt mt-3 text-sm font-medium text-slate-500">

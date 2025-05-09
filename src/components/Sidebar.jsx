@@ -43,7 +43,7 @@ const Sidebar = () => {
           pathname === "/" ? "" : "max-lg:-translate-x-full"
         }`}
       >
-        <div className="sidebarHeader p-6 max-lg:p-4 max-lg:border-b border-[#EAECF0]">
+        <div className="sidebarHeader p-4 max-lg:p-4 max-lg:border-b border-[#EAECF0]">
           <div className="flex w-full">
             <Link className="lg:mb-6 flex flex-1 max-lg:-ml-1" to={'/'}>
               <img
