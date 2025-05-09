@@ -93,6 +93,9 @@ const Chat = () => {
           receivedMsg
         ]))
       }
+      if(receivedMsg?.mediaUrl?.length) {
+        fetchChatImages()
+      }
   }, [receivedMsg])
 
 
@@ -120,9 +123,6 @@ const Chat = () => {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
   }, [messages]);
-
-  console.log("messagesssssssssssssssssssssssss", messages)
-
 
   const handleImageUpload = async (img) => {
     try {
