@@ -11,7 +11,9 @@ const HeaderUser = () => {
       const a = JSON.parse(userDetails)
       if(a?.isGroup) {
         setUser(a)
-      } else {
+      } else if(a?.fromSearch) {
+        setUser(a)
+      }else {
         setUser(a?.friendDetails)
       }
     }, [location?.pathname]);

@@ -74,6 +74,7 @@ const SearchUser = () => {
                     <div key={item?._id} 
                       onClick={()=> {
                         if(item?.chatId?.length) {
+                          localStorage.setItem("ACTIVE_CHAT_USER", JSON.stringify({fromSearch : true, ...item}))
                           navigate(`/${item?.chatId?.[0]}`)
                         } else return
                       }}  

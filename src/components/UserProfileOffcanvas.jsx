@@ -49,7 +49,7 @@ const UserProfileOffcanvas = ({isAnother, anotherUser}) => {
               <ArrowLeft  size={16}/>
             </button>
             <div className="cursor-pointer" onClick={()=>setShowSearch(true)}>
-              <Avatar name={anotherUser?.isGroup ? anotherUser?.groupName :anotherUser?.userName} img={anotherUser?.isGroup ? anotherUser?.groupImage :anotherUser?.avtarUrl}/>
+              <Avatar name={anotherUser?.isGroup ? anotherUser?.groupName : anotherUser?.fromSearch ? anotherUser?.userName : anotherUser?.userName} img={anotherUser?.isGroup ? anotherUser?.groupImage :anotherUser?.avtarUrl}/>
             </div>
             <div className="flex-1">
               <div className="flex items-center justify-between text-sm font-semibold text-[#344054]">
