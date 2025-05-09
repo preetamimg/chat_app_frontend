@@ -88,7 +88,7 @@ const CreateGroupOffcanvas = ({fetchGroupList}) => {
 
   return (
     <>
-      <div onClick={()=> setShowOffcanvas(true)} className="flex items-center justify-center size-12 min-h-12 rounded-full overflow-hidden bg-[#2B04A6] sticky right-0 bottom-4 ml-auto cursor-pointer z-20 text-white">
+      <div onClick={()=> setShowOffcanvas(true)} className="flex items-center justify-center size-12 min-h-12 rounded-full overflow-hidden bg-[#2B04A6] sticky right-4 lg:right-0 bottom-4 ml-auto cursor-pointer z-20 text-white">
         <UserRoundPlus size={20} />
       </div>
       <div className={`z-50 fixed bg-white shadow w-full lg:w-[30rem] h-dvh top-0 right-0 overflow-hidden flex flex-col transition-all duration-500 ${showOffcanvas ? '' : "translate-x-full"}`}>
