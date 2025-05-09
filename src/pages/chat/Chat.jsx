@@ -53,7 +53,7 @@ const Chat = () => {
       updateMsgStatus();
       fetchChatImages()
     }
-  }, [user?._id, location?.pathname?.slice(1)])
+  }, [user?._id, location?.pathname?.slice(1), showImage])
 
 
 
