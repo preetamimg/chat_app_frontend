@@ -72,7 +72,7 @@ const Sidebar = () => {
               : ''
             }
           </div>
-          <div className={`flex items-center h-10 border border-slate-200 rounded-lg overflow-hidden relative before:absolute before:h-full before:w-1/2 before:rounded-lg before:bg-[#2B04A6] before:top-0 before:z-10 before:transition-all before:duration-300 before:ease-in ${activeTab === "chat" ? "before:left-0" : "before:left-1/2"}`}>
+          <div className={`max-lg:mt-3 flex items-center h-10 border border-slate-200 rounded-lg overflow-hidden relative before:absolute before:h-full before:w-1/2 before:rounded-lg before:bg-[#2B04A6] before:top-0 before:z-10 before:transition-all before:duration-300 before:ease-in ${activeTab === "chat" ? "before:left-0" : "before:left-1/2"}`}>
             <button onClick={()=> setActiveTab("chat")} className={`w-1/2 flex items-center justify-center h-full text-sm font-medium relative z-20 cursor-pointer transition-all duration-300 ease-in  ${activeTab === "chat" ? "text-white" : 'text-black'}`}>Chats</button>
             <button onClick={()=> setActiveTab("group")} className={`w-1/2 flex items-center justify-center h-full text-sm font-medium relative z-20 cursor-pointer  transition-all duration-300 ease-in ${activeTab === "group" ? "text-white" : 'text-black'}`}>Group</button>
           </div>
