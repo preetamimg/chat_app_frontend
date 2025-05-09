@@ -8,6 +8,7 @@ import { ImageUp, SendHorizontal, Trash2 } from 'lucide-react';
 import ImageUploading from "react-images-uploading";
 import moment from 'moment';
 import Avatar from '../../components/Avatar';
+import EmptyChat from '../../components/EmptyChat';
 
 const Chat = () => {
   const chatRef = useRef()
@@ -178,7 +179,9 @@ const Chat = () => {
                   </div>
                 </div>
               ))
-            : "no message"
+            : <div className="flex items-center justify-center h-full">
+              <EmptyChat title='No Message' desc="Start messaging"/>
+            </div>
           }
         </div>
         <div className="border-t border-slate-200 p-4 lg:p-5 relative">
