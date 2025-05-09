@@ -140,8 +140,12 @@ const Chat = () => {
   }
 
   const handleImgPreview = (el)=> {
-    const requiredIndex = chatImages.indexOf(el);
-    setActiveIndex(requiredIndex);
+    const requiredIndex = chatImages?.indexOf(el);
+    if(requiredIndex) {
+      setActiveIndex(requiredIndex);
+    } else {
+      handleImgPreview(el)
+    }
     setShowImage(true)
   }
 
