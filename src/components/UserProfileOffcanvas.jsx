@@ -37,6 +37,8 @@ const UserProfileOffcanvas = ({isAnother, anotherUser}) => {
     }
   }
 
+  console.log("anotherUser", anotherUser)
+
   return (
     <>
     {
@@ -47,13 +49,17 @@ const UserProfileOffcanvas = ({isAnother, anotherUser}) => {
               <ArrowLeft  size={16}/>
             </button>
             <div className="cursor-pointer" onClick={()=>setShowSearch(true)}>
-              <Avatar name={anotherUser?.userName} img={anotherUser?.avtarUrl}/>
+              <Avatar name={anotherUser?.isGroup ? anotherUser?.groupName :anotherUser?.userName} img={anotherUser?.isGroup ? anotherUser?.groupImage :anotherUser?.avtarUrl}/>
             </div>
             <div className="flex-1">
               <div className="flex items-center justify-between text-sm font-semibold text-[#344054]">
-                {anotherUser?.userName ? anotherUser?.userName : ''}
+                {anotherUser?.isGroup ? anotherUser?.groupName : anotherUser?.userName ? anotherUser?.userName : ''}
               </div>
-              <div className="text-[#475467] text-xs font-normal line-clamp-1">{anotherUser?.email ? anotherUser?.email : ''}</div>
+              {
+                anotherUser?.isGroup ? 
+                <div className="text-[#475467] text-xs font-normal line-clamp-1">{anotherUser?.participants?.length} Members</div>
+                : <div className="text-[#475467] text-xs font-normal line-clamp-1">{anotherUser?.email ? anotherUser?.email : ''}</div>
+              }
             </div>
           </div>
         </> : 

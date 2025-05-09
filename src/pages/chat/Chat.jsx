@@ -136,6 +136,8 @@ const Chat = () => {
     }
   }
 
+  console.log("messagessssssssssssssssssssssssssss", messages)
+
 
 
   return (
@@ -171,7 +173,7 @@ const Chat = () => {
                     {
                       item?.senderId?._id === user?._id ? 
                         <Avatar name={user?.userName} img={user?.avtarUrl}/>
-                      : <Avatar name={chatUser?.friendDetails?.userName} img={chatUser?.friendDetails?.avtarUrl}/>
+                      : <Avatar name={item?.senderId?.userName} img={item?.senderId?.avtarUrl}/>
                     }
                   </div>
                 </div>

@@ -8,8 +8,12 @@ const HeaderUser = () => {
 
     useEffect(()=> {
       const userDetails = localStorage.getItem("ACTIVE_CHAT_USER");
-      const a = JSON.parse(userDetails)?.friendDetails
-      setUser(a)
+      const a = JSON.parse(userDetails)
+      if(a?.isGroup) {
+        setUser(a)
+      } else {
+        setUser(a?.friendDetails)
+      }
     }, [location?.pathname]);
 
     if(location?.pathname === "/") return
