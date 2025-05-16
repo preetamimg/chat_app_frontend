@@ -234,11 +234,11 @@ const Chat = () => {
                 </div>
               )}
             </ImageUploading>
-            <button
+            {/* <button
               className={`size-10 flex items-center justify-center rounded-full absolute right-36 cursor-pointer bottom-5 lg:bottom-6`}
             >
                 <Mic size={20}/>
-            </button>
+            </button> */}
           <form className='flex items-center gap-4' onSubmit={handleSendMessage}>
             <textarea value={newMessage} onChange={(e)=>setNewMessage(e.target.value)} className='border pl-12 border-slate-200 w-full flex-1 p-3 h-12 min-h-12 max-h-12 rounded-lg text-sm ' placeholder='Type a message...' />
             <button type='submit' className='commonBtn max-lg:!size-10 max-lg:!rounded-full max-lg:!p-0 max-lg:overflow-hidden'>
