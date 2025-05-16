@@ -2,9 +2,14 @@ import React, { useCallback, useEffect, useState } from 'react'
 import ReactPlayer from 'react-player'
 import peer from '../service/peer'
 import { socket } from '../service/socket'
+import { Video } from 'lucide-react'
+import IncomingCall from './IncomingCall'
+import CallRejection from './CallRejection'
+import CallScreen from './CallScreen'
 
 const AudioCall = ({userId, chatId}) => {
-
+  const [showCallRejection, setShowCallRejection] = useState(false)
+  const [rejectUser, setRejectUser] = useState({})
   const [myStream, setMyStream] = useState()
   const [remoteStream, setRemoteStream] = useState()
   const [incommingCall, setIncommingCall] = useState({
@@ -12,7 +17,6 @@ const AudioCall = ({userId, chatId}) => {
     callData : {}
   })
 
-  console.log("remoteStream", remoteStream)
   
   const handleCallUser = async () => {
     const friendId = JSON.parse(localStorage.getItem("ACTIVE_CHAT_USER"))?.friendDetails?.friendId
@@ -40,10 +44,24 @@ const AudioCall = ({userId, chatId}) => {
     })
     setMyStream(stream)
     const answer = await peer.getAnswer(incommingCall?.callData?.offer)
-    socket.emit("call-response", {to : incommingCall?.callData?.from, from : userId,  answer})
+    socket.emit("call-response", {to : incommingCall?.callData?.from?._id, from : userId,  answer})
+    setIncommingCall(prev => ({
+      ...prev,
+      isCall : false
+    }))
+  }
+
+  const rejectCall = async () => {
+    socket.emit("call-rejected-response", {to : incommingCall?.callData?.from?._id, from : userId})
+
+    setIncommingCall(prev => ({
+      ...prev,
+      isCall : false
+    }))
   }
 
     const sendStreams = useCallback(() => {
+      console.log("event chala")
     for (const track of myStream.getTracks()) {
       peer.peer.addTrack(track, myStream);
     }
@@ -64,13 +82,34 @@ const AudioCall = ({userId, chatId}) => {
     const friendId = JSON.parse(localStorage.getItem("ACTIVE_CHAT_USER"))?.friendDetails?.friendId;
     const answer = await peer.getAnswer(offer)
     socket.emit("negotiationDone", {to : friendId, from : userId,  answer})
+    setTimeout(()=> {
+      sendStreams()
+    }, 300)
   }
 
   const handleFinalNego = async ({from, answer}) => {
     await peer.setRemoteDescription(answer)
-    setTimeout(()=> {
-      sendStreams()
-    }, 300)
+  }
+
+  const handleCallRejection = (data) => {
+    setRejectUser(data?.userDetails)
+    if (myStream) {
+      myStream.getTracks().forEach(track => track.stop());
+    }
+
+    setMyStream()
+    setRemoteStream()
+    setShowCallRejection(true)
+  }
+
+    const handleCallEnd = () => {
+    if (myStream) {
+      myStream.getTracks().forEach(track => track.stop());
+    }
+
+    setMyStream()
+    setRemoteStream()
+    // setShowCallRejection(true)
   }
 
   useEffect(()=> {
@@ -93,6 +132,8 @@ const AudioCall = ({userId, chatId}) => {
     socket.on("call-accepted", handleCallAccept)
     socket.on("negotiationneeded-accepted", handleNegoAccept)
     socket.on("negotiationneeded-final", handleFinalNego)
+    socket.on("call-rejected", handleCallRejection)
+
 
 
     return () => {
@@ -100,40 +141,30 @@ const AudioCall = ({userId, chatId}) => {
       socket.off("call-accepted", handleCallAccept)
       socket.off("negotiationneeded-accepted", handleNegoAccept)
       socket.off("negotiationneeded-final", handleFinalNego)
+      socket.off("call-rejected", handleCallRejection)
     }
   }, [chatId, userId, myStream, remoteStream])
 
   return (
     <>
-    <div className="flex gap-3">
-
-      <button onClick={handleCallUser} className='commonBtn'>Call User</button>
+      <button onClick={handleCallUser} className={`size-10 bg-blue-50 flex items-center justify-center rounded-full cursor-pointer ${location.pathname === "/" ? 'hidden' : ''}`}>
+        <Video size={16} />
+      </button>
       {
         incommingCall?.isCall ? 
-          <button onClick={acceptIncomingCall} className='commonBtn'>Receive Call</button>
-        : ''
-      }
-
-      {myStream && <button className='commonBtn' onClick={sendStreams}>Send Stream</button>}
-    </div>
-
-      <div className="flex my-5">
-
-      {
-        myStream ? <div>
-        <h6 className='text-center mb-3'>My Stream</h6>
-        <ReactPlayer playing muted height={300} width={600} url={myStream}/>
-        </div>
+          <IncomingCall onAccept={acceptIncomingCall} onReject={rejectCall} userData={incommingCall?.callData?.from}/>
         : ''
       }
       {
-        remoteStream ? <div>
-        <h6 className='text-center mb-3'>remote Stream</h6>
-        <ReactPlayer playing muted height={300} width={600} url={remoteStream}/>
-        </div>
+        showCallRejection ? 
+        <CallRejection userData={rejectUser} setShowCallRejection={setShowCallRejection}/> 
         : ''
       }
-      </div>
+      {
+        myStream ? 
+          <CallScreen myStream={myStream} remoteStream={remoteStream} onReject={handleCallEnd}/>
+        : ''
+      }
     </>
   )
 }

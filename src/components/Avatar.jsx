@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Avatar = ({name, img}) => {
+const Avatar = ({name, img, size}) => {
   return (
-    <div className="size-8 lg:size-10 rounded-full overflow-hidden">
+    <div className={` rounded-full overflow-hidden ${size === "big" ? "size-25 lg:size-25 *:!text-2xl bg-white" : "size-8 lg:size-10"}`}>
       {
         img ?    
         <img

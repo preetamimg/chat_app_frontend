@@ -5,9 +5,14 @@ import MessageOffcanvas from './MessageOffcanvas'
 import SearchUserOffcanvas from './SearchUserOffcanvas'
 import HeaderUser from './HeaderUser'
 import { useLocation } from 'react-router'
+import useProfile from '../hooks/useProfile'
+import AudioCall from './AudioCall'
+
 
 const Header = () => {
-  const pathname = useLocation().pathname
+  const pathname = useLocation().pathname;
+  const {user} = useProfile()
+
   return (
     <>
       <div className='px-4 py-3 lg:p-5 border-b border-[#EAECF0]'>
@@ -27,8 +32,10 @@ const Header = () => {
               <FriendRequestOffcanvas/>
               <MessageOffcanvas/>
             </>
-            : ''
+            : <>
+            </>
           }
+          <AudioCall userId={user?._id} chatId={location?.pathname?.slice(1)}/>
         </div>
       </div>
     </>
