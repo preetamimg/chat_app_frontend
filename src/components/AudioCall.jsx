@@ -8,7 +8,10 @@ import CallRejection from './CallRejection'
 import CallScreen from './CallScreen'
 
 const AudioCall = ({userId, chatId}) => {
-  const [showCallRejection, setShowCallRejection] = useState(false)
+  const [showCallRejection, setShowCallRejection] = useState({
+    isOpen : false,
+    message : ""
+  })
   const [rejectUser, setRejectUser] = useState({})
   const [myStream, setMyStream] = useState()
   const [remoteStream, setRemoteStream] = useState()
@@ -60,10 +63,21 @@ const AudioCall = ({userId, chatId}) => {
     }))
   }
 
+    const endCall = async () => {
+    const friendId = JSON.parse(localStorage.getItem("ACTIVE_CHAT_USER"))?.friendDetails?.friendId
+    socket.emit("end-call-response", {to : friendId, from : userId})
+        if (myStream) {
+      myStream.getTracks().forEach(track => track.stop());
+    }
+
+    setMyStream()
+    setRemoteStream()
+  }
+
     const sendStreams = useCallback(() => {
       console.log("event chala")
     for (const track of myStream.getTracks()) {
-      peer.peer.addTrack(track, myStream);
+      peer?.peer?.addTrack(track, myStream);
     }
   }, [myStream]);
 
@@ -99,17 +113,28 @@ const AudioCall = ({userId, chatId}) => {
 
     setMyStream()
     setRemoteStream()
-    setShowCallRejection(true)
+    setShowCallRejection({
+      isOpen : true,
+      message : "reject"
+    })
   }
 
-    const handleCallEnd = () => {
+    const handleCallEnd = (data) => {
+      setRejectUser(data?.userDetails)
     if (myStream) {
       myStream.getTracks().forEach(track => track.stop());
     }
 
     setMyStream()
     setRemoteStream()
-    // setShowCallRejection(true)
+    setIncommingCall(prev => ({
+      ...prev,
+      isCall : false
+    }))
+    setShowCallRejection({
+      isOpen : true,
+      message : "end"
+    });
   }
 
   useEffect(()=> {
@@ -133,6 +158,8 @@ const AudioCall = ({userId, chatId}) => {
     socket.on("negotiationneeded-accepted", handleNegoAccept)
     socket.on("negotiationneeded-final", handleFinalNego)
     socket.on("call-rejected", handleCallRejection)
+    socket.on("call-ended", handleCallEnd)
+
 
 
 
@@ -142,6 +169,7 @@ const AudioCall = ({userId, chatId}) => {
       socket.off("negotiationneeded-accepted", handleNegoAccept)
       socket.off("negotiationneeded-final", handleFinalNego)
       socket.off("call-rejected", handleCallRejection)
+      socket.off("call-ended", handleCallEnd)
     }
   }, [chatId, userId, myStream, remoteStream])
 
@@ -156,13 +184,13 @@ const AudioCall = ({userId, chatId}) => {
         : ''
       }
       {
-        showCallRejection ? 
-        <CallRejection userData={rejectUser} setShowCallRejection={setShowCallRejection}/> 
+        showCallRejection?.isOpen ? 
+        <CallRejection userData={rejectUser} showCallRejection={showCallRejection} setShowCallRejection={setShowCallRejection}/> 
         : ''
       }
       {
         myStream ? 
-          <CallScreen myStream={myStream} remoteStream={remoteStream} onReject={handleCallEnd}/>
+          <CallScreen myStream={myStream} remoteStream={remoteStream} onReject={endCall}/>
         : ''
       }
     </>
