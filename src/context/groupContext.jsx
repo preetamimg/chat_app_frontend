@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { getAPIAuth } from '../service/apiInstance';
+import useProfile from '../hooks/useProfile';
 
 export const GroupContext = createContext(null)
 
@@ -7,6 +8,7 @@ const GroupContextProvider = ({children}) => {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState({})
   const [groupList, setGroupList] = useState([])
+  const {token} = useProfile()
 
 
   const fetchGroupList = async () => {
@@ -21,8 +23,10 @@ const GroupContextProvider = ({children}) => {
   }
 
   useEffect(()=> {
-    fetchGroupList()
-  }, [])
+    if(token) {
+      fetchGroupList()
+    }
+  }, [token])
 
 
   return (
