@@ -11,10 +11,12 @@ import SearchUserOffcanvas from "./SearchUserOffcanvas";
 import NoData from "./NoData";
 import UserProfileOffcanvas from "./UserProfileOffcanvas";
 import Groups from "./Groups";
+import AudioCall from "./AudioCall";
 
 const Sidebar = () => {
   const navigate = useNavigate()
   const pathname = useLocation().pathname
+  const {user} = useProfile()
   const {token} = useProfile()
   const [ showSidebar, setShowSidebar ] = useState(false);
   const [friendsList, setFriendList] = useState([])
@@ -133,6 +135,7 @@ const Sidebar = () => {
           showSidebar ? "" : "hidden"
         } lg:hidden`}
       ></div>
+      <AudioCall userId={user?._id} chatId={location?.slice(1)}/>
     </>
   );
 };
