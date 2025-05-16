@@ -5,7 +5,7 @@ import Avatar from './Avatar'
 
 const CallScreen = ({onReject, remoteStream, myStream}) => {
   const [friend, setFriend] = useState({})
-  const [isSm, setIsSm] = useState(true)
+  // const [isSm, setIsSm] = useState(true)
 
   useEffect(()=> {
     const friendDetails = JSON.parse(localStorage.getItem("ACTIVE_CHAT_USER"))?.friendDetails
@@ -33,11 +33,11 @@ const CallScreen = ({onReject, remoteStream, myStream}) => {
                 <ReactPlayer playing muted className="*:!size-full" url={myStream}/>
               : "my stream"
             }
-            <div className="absolute top-0 left-0 z-50 size-full bg-black/50 flex items-center justify-center text-white">
+            {/* <div className="absolute top-0 left-0 z-50 size-full bg-black/50 flex items-center justify-center text-white">
               <button className='cursor-pointer' onClick={()=> setIsSm(!isSm)}>
                 <Maximize size={"20"} />
               </button>
-            </div>
+            </div> */}
           </div>
           <button onClick={onReject} className='absolute bottom-0 left-1/2 -translate-y-1/2 size-10 bg-red-500 text-white rounded-full flex items-center justify-center cursor-pointer'><PhoneOff size={16} /></button>
         </div>

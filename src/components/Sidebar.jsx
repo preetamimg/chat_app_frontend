@@ -11,7 +11,7 @@ import SearchUserOffcanvas from "./SearchUserOffcanvas";
 import NoData from "./NoData";
 import UserProfileOffcanvas from "./UserProfileOffcanvas";
 import Groups from "./Groups";
-import AudioCall from "./AudioCall";
+// import AudioCall from "./AudioCall";
 
 const Sidebar = () => {
   const navigate = useNavigate()
@@ -135,7 +135,7 @@ const Sidebar = () => {
           showSidebar ? "" : "hidden"
         } lg:hidden`}
       ></div>
-      <AudioCall userId={user?._id} fromHeader={true}/>
+      {/* <AudioCall userId={user?._id} fromHeader={true}/> */}
     </>
   );
 };
