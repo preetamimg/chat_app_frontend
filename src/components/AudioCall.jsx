@@ -7,7 +7,7 @@ import IncomingCall from './IncomingCall'
 import CallRejection from './CallRejection'
 import CallScreen from './CallScreen'
 
-const AudioCall = ({userId, chatId}) => {
+const AudioCall = ({userId, chatId, fromHeader}) => {
   const [showCallRejection, setShowCallRejection] = useState({
     isOpen : false,
     message : ""
@@ -175,7 +175,7 @@ const AudioCall = ({userId, chatId}) => {
 
   return (
     <>
-      <button onClick={handleCallUser} className={`size-10 bg-blue-50 flex items-center justify-center rounded-full cursor-pointer ${location.pathname === "/" ? 'hidden' : ''}`}>
+      <button onClick={handleCallUser} className={`size-10 bg-blue-50 flex items-center justify-center rounded-full cursor-pointer ${fromHeader ? 'hidden' : ''} ${location.pathname === "/" ? 'hidden' : ''}`}>
         <Video size={16} />
       </button>
       {

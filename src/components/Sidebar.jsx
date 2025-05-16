@@ -135,7 +135,7 @@ const Sidebar = () => {
           showSidebar ? "" : "hidden"
         } lg:hidden`}
       ></div>
-      <AudioCall userId={user?._id}/>
+      <AudioCall userId={user?._id} fromHeader={true}/>
     </>
   );
 };
