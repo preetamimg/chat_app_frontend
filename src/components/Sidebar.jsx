@@ -135,7 +135,7 @@ const Sidebar = () => {
           showSidebar ? "" : "hidden"
         } lg:hidden`}
       ></div>
-      <AudioCall userId={user?._id} chatId={location?.slice(1)}/>
+      <AudioCall userId={user?._id}/>
     </>
   );
 };
