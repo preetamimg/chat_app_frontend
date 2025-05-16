@@ -4,7 +4,7 @@ import { socket } from '../../service/socket';
 import useProfile from '../../hooks/useProfile';
 import { useLocation } from 'react-router';
 import { formDataAuth, getAPIAuth, postAPIAuth } from '../../service/apiInstance';
-import { ImageUp, SendHorizontal, Trash2 } from 'lucide-react';
+import { ImageUp, Mic, SendHorizontal, Trash2 } from 'lucide-react';
 import ImageUploading from "react-images-uploading";
 import moment from 'moment';
 import Avatar from '../../components/Avatar';
@@ -157,6 +157,7 @@ const Chat = () => {
       <div className="flex flex-col h-full overflow-hidden">
         <div ref={chatRef} className="flex-1 h-full overflow-y-auto p-5 chatScrollDiv">
         {/* <AudioCall userId={user?._id} peerId={location?.pathname?.slice(1)}/> */}
+        <AudioCall userId={user?._id} chatId={location?.pathname?.slice(1)}/>
           {
             messages?.length ?
               messages?.map(item => (
@@ -236,6 +237,11 @@ const Chat = () => {
                 </div>
               )}
             </ImageUploading>
+            <button
+              className={`size-10 flex items-center justify-center rounded-full absolute right-36 cursor-pointer bottom-5 lg:bottom-6`}
+            >
+                <Mic size={20}/>
+            </button>
           <form className='flex items-center gap-4' onSubmit={handleSendMessage}>
             <textarea value={newMessage} onChange={(e)=>setNewMessage(e.target.value)} className='border pl-12 border-slate-200 w-full flex-1 p-3 h-12 min-h-12 max-h-12 rounded-lg text-sm ' placeholder='Type a message...' />
             <button type='submit' className='commonBtn max-lg:!size-10 max-lg:!rounded-full max-lg:!p-0 max-lg:overflow-hidden'>

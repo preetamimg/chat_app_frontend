@@ -1,30 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { getAPIAuth } from '../service/apiInstance'
 import { useLocation, useNavigate } from 'react-router'
 import NoData from './NoData'
 import moment from 'moment'
 import Avatar from './Avatar'
-import CreateGroupOffcanvas from './CreateGroupOffcanvas'
+import { useGroup } from '../hooks/useGroup'
+import { UserRoundPlus } from 'lucide-react'
 
 const Groups = () => {
-  const [groupList, setGroupList] = useState([])
   const navigate = useNavigate()
   const pathname = useLocation().pathname
+  const {setShowOffcanvas, groupList} = useGroup()
 
-    const fetchGroupList = async () => {
-      try {
-        const res = await getAPIAuth('group/list')
-        if(res?.data?.success) {
-          setGroupList(res?.data?.data)
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  
-    useEffect(()=> {
-      fetchGroupList()
-    }, [])
   return (
     <>
       <ul className="m-0 p-0 list-none h-full">
@@ -67,7 +52,9 @@ const Groups = () => {
           </div>
         }
       </ul>
-      <CreateGroupOffcanvas fetchGroupList={fetchGroupList}/>
+      <div onClick={()=> setShowOffcanvas(true)} className="flex items-center justify-center size-12 min-h-12 rounded-full overflow-hidden bg-[#2B04A6] sticky right-4 lg:right-0 bottom-4 ml-auto cursor-pointer z-20 text-white">
+        <UserRoundPlus size={20} />
+      </div>
     </>
   )
 }

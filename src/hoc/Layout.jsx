@@ -4,6 +4,7 @@ import Header from '../components/Header'
 import useProfile from '../hooks/useProfile'
 import { socket } from '../service/socket'
 import { useLocation } from 'react-router'
+import CreateGroupOffcanvas from '../components/CreateGroupOffcanvas'
 
 const Layout = ({children}) => {
     const {user} = useProfile()
@@ -40,6 +41,7 @@ const Layout = ({children}) => {
           </div>
         </div>
       </div>
+    <CreateGroupOffcanvas/>
     </div>
   )
 }

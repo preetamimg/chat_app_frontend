@@ -6,11 +6,13 @@ import Avatar from './Avatar'
 import { formDataAuth } from '../service/apiInstance'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router'
+import { useGroup } from '../hooks/useGroup'
 
 const UserProfileOffcanvas = ({isAnother, anotherUser}) => {
   const navigate = useNavigate()
   const [showSearch, setShowSearch] = useState(false)
   const {user, handleSignOut, fetchUserDetails} = useProfile()
+  const {setSelectedGroup, setShowOffcanvas} = useGroup()
   
 
   const updateProfileImage = async (img)=> {
@@ -87,7 +89,15 @@ const UserProfileOffcanvas = ({isAnother, anotherUser}) => {
             <X size={20} />
           </button>
         </div>
-        <div className="body p-5 flex-1 h-full overflow-y-auto">
+        <div className="body p-5 flex-1 h-full overflow-y-auto relative">
+          {
+            user?._id === anotherUser?.groupAdmin?.[0] ? 
+            <button onClick={()=> {
+              setShowSearch(false)
+              setShowOffcanvas(true)
+              setSelectedGroup(anotherUser)
+            }} className='bg-green-100 text-sm font-medium text-green-500 px-3 rounded ml-auto h-7 flex items-center justify-center cursor-pointer' type="button">Edit</button> : ''
+          }
           <div className="flex items-center justify-center flex-col">
             <input className='hidden' id='profileImg' type="file" accept='image/*' onChange={handleChange} />
             <div className="relative size-40 rounded-full bg-[#2B04A6]/5 flex items-center justify-center uppercase font-semibold text-2xl">
@@ -137,9 +147,10 @@ const UserProfileOffcanvas = ({isAnother, anotherUser}) => {
                                 item?._id === anotherUser?.groupAdmin?.[0] ? 
                                 <div className="ml-auto text-xs font-medium bg-green-100 text-green-500 px-2 h-5 flex items-center justify-center rounded-full">Admin</div>
                                 : anotherUser?.groupAdmin?.[0] === user?._id ? 
-                                  <button className="flex items-center justify-center size-8 bg-red-500 rounded-full text-white">
-                                    <Trash2 size={16}/>
-                                  </button> 
+                                  // <button className="flex items-center justify-center size-8 bg-red-500 rounded-full text-white">
+                                  //   <Trash2 size={16}/>
+                                  // </button> 
+                                  ""
                                 : ''
                               }
                             </div>

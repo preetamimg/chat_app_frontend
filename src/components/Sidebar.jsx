@@ -39,7 +39,7 @@ const Sidebar = () => {
   return (
     <>
       <div
-        className={`sidebar w-full sm:w-[17.5rem] bg-white h-full overflow-hidden flex flex-col max-lg:h-dvh max-lg:fixed max-lg:z-20 transition-all duration-300 ease-in-out max-lg:top-0 max-lg:left-0 border-r border-[#EAECF0] ${
+        className={`sidebar w-full lg:w-[17.5rem] bg-white h-full overflow-hidden flex flex-col max-lg:h-dvh max-lg:fixed max-lg:z-20 transition-all duration-300 ease-in-out max-lg:top-0 max-lg:left-0 border-r border-[#EAECF0] ${
           pathname === "/" ? "" : "max-lg:-translate-x-full"
         }`}
       >

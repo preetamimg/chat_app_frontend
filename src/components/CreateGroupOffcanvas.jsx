@@ -6,30 +6,61 @@ import { formDataAuth, getAPIAuth } from '../service/apiInstance'
 import { toast } from 'react-toastify'
 import { useFormik } from 'formik'
 import { groupValidationSchema } from '../validationSchema/groupSchema'
+import { useGroup } from '../hooks/useGroup'
 
-const CreateGroupOffcanvas = ({fetchGroupList}) => {
-  const [showOffcanvas, setShowOffcanvas] = useState(false)
+const CreateGroupOffcanvas = () => {
+  const {showOffcanvas, setShowOffcanvas, selectedGroup, fetchGroupList} = useGroup()
   const {user} = useProfile()
   const [friendList, setFriendList] = useState([])
   const [imagePreview, setImagePreview] = useState("")
+
+  useEffect(()=> {
+    if(selectedGroup?._id) {
+
+      // formik.setFieldValue("image", [user?._id])
+      formik.setFieldValue("groupName", selectedGroup?.groupName)
+      formik.setFieldValue("groupDescription", selectedGroup?.groupDescription)
+  
+      const idCollection = selectedGroup?.participants?.map(item => {
+        return item?._id
+      })
+    
+      formik.setFieldValue("participants", [user?._id, ...idCollection ])
+    }
+
+  }, [selectedGroup])
 
   const handleSubmit = async (values) => {
     const formdata = new FormData();
     formdata.append("groupName", values?.groupName)
     formdata.append("groupDescription", values?.groupDescription)
-    formdata.append("image", values?.image)
+    formdata.append("image", values?.image ? values?.image : '')
 
     values?.participants?.map(el => (
       formdata.append("participants", el)
     ))
 
-    const res = await formDataAuth("group/create", formdata);
+    if(selectedGroup?._id) {
+      formdata.append("chatId", selectedGroup?._id)
+    }
+
+    let res 
+
+    if(selectedGroup?._id) {
+      res = await formDataAuth("group/edit", formdata);
+    } else {
+      res = await formDataAuth("group/create", formdata);
+    }
+
 
     if(res?.data?.success) {
       toast.success(res?.data?.message)
       formik.resetForm()
       setShowOffcanvas(false)
       fetchGroupList()
+      if(selectedGroup?._id) {
+        localStorage.setItem("ACTIVE_CHAT_USER", JSON.stringify(res?.data?.data))
+      }
     }
   }
 
@@ -90,13 +121,13 @@ const CreateGroupOffcanvas = ({fetchGroupList}) => {
 
   return (
     <>
-      <div onClick={()=> setShowOffcanvas(true)} className="flex items-center justify-center size-12 min-h-12 rounded-full overflow-hidden bg-[#2B04A6] sticky right-4 lg:right-0 bottom-4 ml-auto cursor-pointer z-20 text-white">
+      {/* <div onClick={()=> setShowOffcanvas(true)} className="flex items-center justify-center size-12 min-h-12 rounded-full overflow-hidden bg-[#2B04A6] sticky right-4 lg:right-0 bottom-4 ml-auto cursor-pointer z-20 text-white">
         <UserRoundPlus size={20} />
-      </div>
+      </div> */}
       <div className={`z-50 fixed bg-white shadow w-full lg:w-[30rem] h-dvh top-0 right-0 overflow-hidden flex flex-col transition-all duration-500 ${showOffcanvas ? '' : "translate-x-full"}`}>
         <div className="header p-5 border-b border-[#EAECF0] flex justify-between items-center">
           <div className="text-lg font-semibold capitalize">
-            Create Group
+            {selectedGroup?._id ? "Edit" : "Create"} Group
           </div>
           <button onClick={()=> setShowOffcanvas(false)} className='cursor-pointer flex items-center justify-center'>
             <X size={20} />
@@ -109,6 +140,7 @@ const CreateGroupOffcanvas = ({fetchGroupList}) => {
               <div className="size-full overflow-hidden rounded-full flex items-center justify-center">
                 {
                   imagePreview ? <img src={imagePreview} className='size-full object-cover' alt='image'/> :
+                  selectedGroup?.groupImge ? <img src={selectedGroup?.groupImge} className='size-full object-cover' alt='image'/> :
                   user?.avtarUrl ? 
                     <img src={"./assets/img/dummyGroup.png"} className='size-full object-cover' alt='image'/>
                   : ""
@@ -166,7 +198,9 @@ const CreateGroupOffcanvas = ({fetchGroupList}) => {
               </ul>
             </div>
             <div className=" mt-3 w-full sticky bottom-0 left-0 py-5 bg-white">
-              <button type='submit' className='commonBtn w-full'>Create</button>
+              <button type='submit' className='commonBtn w-full'>
+                {selectedGroup?._id ? "Edit" : "Create"}
+              </button>
             </div>
 
           </form>
